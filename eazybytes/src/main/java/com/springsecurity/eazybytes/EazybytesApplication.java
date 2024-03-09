@@ -1,13 +1,13 @@
-package br.com.ordercontrol.auth;
+package com.springsecurity.eazybytes;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AuthApplication {
+public class EazybytesApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AuthApplication.class, args);
+		SpringApplication.run(EazybytesApplication.class, args);
 	}
 
 }

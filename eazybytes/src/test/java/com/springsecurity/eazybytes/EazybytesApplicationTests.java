@@ -1,10 +1,10 @@
-package br.com.ordercontrol.auth;
+package com.springsecurity.eazybytes;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AuthApplicationTests {
+class EazybytesApplicationTests {
 
 	@Test
 	void contextLoads() {
