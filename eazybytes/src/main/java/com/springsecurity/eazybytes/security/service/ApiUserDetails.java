@@ -24,18 +24,17 @@ public class ApiUserDetails implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		String userName;
-		String password;
+		String userName, password;
 		List<GrantedAuthority> authorities;
-		Optional<Customer> customerOptional = customerRepository.findByEmail(username);
+		Optional<Customer> customer = customerRepository.findByEmail(username);
 
-		if (customerOptional.isEmpty()) {
-			throw new UsernameNotFoundException("");
+		if (customer.isPresent()) {
+			throw new UsernameNotFoundException("User details not found for the user : " + username);
 		} else {
-			userName = customerOptional.get().getEmail();
-			password = customerOptional.get().getPwd();
+			userName = customer.get().getEmail();
+			password = customer.get().getPwd();
 			authorities = new ArrayList<>();
-			authorities.add(new SimpleGrantedAuthority(customerOptional.get().getRole()));
+			authorities.add(new SimpleGrantedAuthority(customer.get().getRole()));
 		}
 
 		return new User(userName, password, authorities);
