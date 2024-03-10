@@ -1,0 +1,949 @@
+{
+	"info": {
+		"_postman_id": "ca125959-7635-495c-89d6-ef2dbeded563",
+		"name": "eazybank",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18011610"
+	},
+	"item": [
+		{
+			"name": "myAccount",
+			"item": [
+				{
+					"name": "getAccountDetails",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "juliane3@email.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8585/myAccount?id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"myAccount"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8585/myAccount?id=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8585",
+									"path": [
+										"myAccount"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-XSRF-TOKEN",
+									"value": "c111c1db-d9db-433f-b1fe-d60287b0d318"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "JSESSIONID=8E56B5138F3B16F312951C6487B4FB94; Path=/; HttpOnly"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "XSRF-TOKEN=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:10 GMT; Path=/"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 10 Mar 2024 22:54:09 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"accountNumber\": 1865764534,\n    \"customerId\": 1,\n    \"accountType\": \"Savings\",\n    \"branchAddress\": \"123 Main Street, New York\",\n    \"createDt\": \"2024-03-10\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "customers",
+			"item": [
+				{
+					"name": "registerCustomer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Juliane\",\r\n    \"email\": \"juliane3@email.com\",\r\n    \"mobileNumber\": \"986532147\",\r\n    \"pwd\": \"123456\",\r\n    \"role\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8585/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201 Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Juliane\",\r\n    \"email\": \"juliane3@email.com\",\r\n    \"mobileNumber\": \"986532147\",\r\n    \"pwd\": \"123456\",\r\n    \"role\": \"admin\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8585/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8585",
+									"path": [
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-XSRF-TOKEN",
+									"value": "c111c1db-d9db-433f-b1fe-d60287b0d318"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain;charset=UTF-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "46"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 10 Mar 2024 22:52:02 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "Given user details are successfully registered"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "myBalance",
+			"item": [
+				{
+					"name": "getBalanceDetails",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "juliane3@email.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8585/myBalance?id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"myBalance"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8585/myBalance?id=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8585",
+									"path": [
+										"myBalance"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-XSRF-TOKEN",
+									"value": "b97a5927-e032-41ec-b7a8-02a03af55635"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 10 Mar 2024 22:59:27 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"transactionId\": \"7648c7f0-df2e-11ee-ad44-00090ffe0001\",\n        \"accountNumber\": 1865764534,\n        \"customerId\": 1,\n        \"transactionDt\": \"2024-03-09T00:00:00.000+00:00\",\n        \"transactionSummary\": \"Amazon.com\",\n        \"transactionType\": \"Withdrawal\",\n        \"transactionAmt\": 100,\n        \"closingBalance\": 34900,\n        \"createDt\": \"2024-03-09\"\n    },\n    {\n        \"transactionId\": \"7648c709-df2e-11ee-ad44-00090ffe0001\",\n        \"accountNumber\": 1865764534,\n        \"customerId\": 1,\n        \"transactionDt\": \"2024-03-08T00:00:00.000+00:00\",\n        \"transactionSummary\": \"OnlineTransfer\",\n        \"transactionType\": \"Deposit\",\n        \"transactionAmt\": 700,\n        \"closingBalance\": 35000,\n        \"createDt\": \"2024-03-08\"\n    },\n    {\n        \"transactionId\": \"7648c62b-df2e-11ee-ad44-00090ffe0001\",\n        \"accountNumber\": 1865764534,\n        \"customerId\": 1,\n        \"transactionDt\": \"2024-03-06T00:00:00.000+00:00\",\n        \"transactionSummary\": \"Ebay\",\n        \"transactionType\": \"Withdrawal\",\n        \"transactionAmt\": 600,\n        \"closingBalance\": 34300,\n        \"createDt\": \"2024-03-06\"\n    },\n    {\n        \"transactionId\": \"7648c59d-df2e-11ee-ad44-00090ffe0001\",\n        \"accountNumber\": 1865764534,\n        \"customerId\": 1,\n        \"transactionDt\": \"2024-03-05T00:00:00.000+00:00\",\n        \"transactionSummary\": \"Self Deposit\",\n        \"transactionType\": \"Deposit\",\n        \"transactionAmt\": 500,\n        \"closingBalance\": 34900,\n        \"createDt\": \"2024-03-05\"\n    },\n    {\n        \"transactionId\": \"7648c4a4-df2e-11ee-ad44-00090ffe0001\",\n        \"accountNumber\": 1865764534,\n        \"customerId\": 1,\n        \"transactionDt\": \"2024-03-04T00:00:00.000+00:00\",\n        \"transactionSummary\": \"Uber\",\n        \"transactionType\": \"Withdrawal\",\n        \"transactionAmt\": 100,\n        \"closingBalance\": 34400,\n        \"createDt\": \"2024-03-04\"\n    },\n    {\n        \"transactionId\": \"7648c0e8-df2e-11ee-ad44-00090ffe0001\",\n        \"accountNumber\": 1865764534,\n        \"customerId\": 1,\n        \"transactionDt\": \"2024-03-03T00:00:00.000+00:00\",\n        \"transactionSummary\": \"Coffee Shop\",\n        \"transactionType\": \"Withdrawal\",\n        \"transactionAmt\": 30,\n        \"closingBalance\": 34500,\n        \"createDt\": \"2024-03-03\"\n    }\n]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "myCards",
+			"item": [
+				{
+					"name": "getCardDetails",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "juliane3@email.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8585/myCards?id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"myCards"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8585/myCards?id=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8585",
+									"path": [
+										"myCards"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-XSRF-TOKEN",
+									"value": "b97a5927-e032-41ec-b7a8-02a03af55635"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 10 Mar 2024 23:01:32 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"cardId\": 1,\n        \"customerId\": 1,\n        \"cardNumber\": \"4565XXXX4656\",\n        \"cardType\": \"Credit\",\n        \"totalLimit\": 10000,\n        \"amountUsed\": 500,\n        \"availableAmount\": 9500,\n        \"createDt\": \"2024-03-10T00:00:00.000+00:00\"\n    },\n    {\n        \"cardId\": 2,\n        \"customerId\": 1,\n        \"cardNumber\": \"3455XXXX8673\",\n        \"cardType\": \"Credit\",\n        \"totalLimit\": 7500,\n        \"amountUsed\": 600,\n        \"availableAmount\": 6900,\n        \"createDt\": \"2024-03-10T00:00:00.000+00:00\"\n    },\n    {\n        \"cardId\": 3,\n        \"customerId\": 1,\n        \"cardNumber\": \"2359XXXX9346\",\n        \"cardType\": \"Credit\",\n        \"totalLimit\": 20000,\n        \"amountUsed\": 4000,\n        \"availableAmount\": 16000,\n        \"createDt\": \"2024-03-10T00:00:00.000+00:00\"\n    }\n]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "myLoans",
+			"item": [
+				{
+					"name": "getLoanDetails",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "juliane3@email.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8585/myLoans?id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"myLoans"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8585/myLoans?id=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8585",
+									"path": [
+										"myLoans"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-XSRF-TOKEN",
+									"value": "b97a5927-e032-41ec-b7a8-02a03af55635"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 10 Mar 2024 23:03:21 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"loanNumber\": 1,\n        \"customerId\": 1,\n        \"startDt\": \"2020-10-13T00:00:00.000+00:00\",\n        \"loanType\": \"Home\",\n        \"totalLoan\": 200000,\n        \"amountPaid\": 50000,\n        \"outstandingAmount\": 150000,\n        \"createDt\": \"2020-10-13\"\n    },\n    {\n        \"loanNumber\": 2,\n        \"customerId\": 1,\n        \"startDt\": \"2020-06-06T00:00:00.000+00:00\",\n        \"loanType\": \"Vehicle\",\n        \"totalLoan\": 40000,\n        \"amountPaid\": 10000,\n        \"outstandingAmount\": 30000,\n        \"createDt\": \"2020-06-06\"\n    },\n    {\n        \"loanNumber\": 3,\n        \"customerId\": 1,\n        \"startDt\": \"2018-02-14T00:00:00.000+00:00\",\n        \"loanType\": \"Home\",\n        \"totalLoan\": 50000,\n        \"amountPaid\": 10000,\n        \"outstandingAmount\": 40000,\n        \"createDt\": \"2018-02-14\"\n    },\n    {\n        \"loanNumber\": 4,\n        \"customerId\": 1,\n        \"startDt\": \"2018-02-14T00:00:00.000+00:00\",\n        \"loanType\": \"Personal\",\n        \"totalLoan\": 10000,\n        \"amountPaid\": 3500,\n        \"outstandingAmount\": 6500,\n        \"createDt\": \"2018-02-14\"\n    }\n]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "contact",
+			"item": [
+				{
+					"name": "saveContactInquiryDetails",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contactName\": \"Rian\",\r\n    \"contactEmail\": \"rian@email.com\",\r\n    \"subject\": \"testes\",\r\n    \"message\": \"rian rian rian rian\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8585/contact",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"contact"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"contactName\": \"Rian\",\r\n    \"contactEmail\": \"rian@email.com\",\r\n    \"subject\": \"testes\",\r\n    \"message\": \"rian rian rian rian\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8585/contact",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8585",
+									"path": [
+										"contact"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-XSRF-TOKEN",
+									"value": "c111c1db-d9db-433f-b1fe-d60287b0d318"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 10 Mar 2024 22:51:07 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"contactId\": \"SR904767143\",\n    \"contactName\": \"Rian\",\n    \"contactEmail\": \"rian@email.com\",\n    \"subject\": \"testes\",\n    \"message\": \"rian rian rian rian\",\n    \"createDt\": \"2024-03-10T19:51:07.0036701\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "notices",
+			"item": [
+				{
+					"name": "getNotices",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8585/notices",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"notices"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8585/notices",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8585",
+									"path": [
+										"notices"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-XSRF-TOKEN",
+									"value": "c111c1db-d9db-433f-b1fe-d60287b0d318"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "max-age=60"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 10 Mar 2024 22:42:02 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"noticeId\": 1,\n        \"noticeSummary\": \"Home Loan Interest rates reduced\",\n        \"noticeDetails\": \"Home loan interest rates are reduced as per the goverment guidelines. The updated rates will be effective immediately\",\n        \"noticBegDt\": \"2024-02-09T00:00:00.000+00:00\",\n        \"noticEndDt\": \"2024-04-09T00:00:00.000+00:00\",\n        \"createDt\": \"2024-03-10T00:00:00.000+00:00\",\n        \"updateDt\": null\n    },\n    {\n        \"noticeId\": 2,\n        \"noticeSummary\": \"Net Banking Offers\",\n        \"noticeDetails\": \"Customers who will opt for Internet banking while opening a saving account will get a $50 amazon voucher\",\n        \"noticBegDt\": \"2024-02-09T00:00:00.000+00:00\",\n        \"noticEndDt\": \"2024-04-09T00:00:00.000+00:00\",\n        \"createDt\": \"2024-03-10T00:00:00.000+00:00\",\n        \"updateDt\": null\n    },\n    {\n        \"noticeId\": 3,\n        \"noticeSummary\": \"Mobile App Downtime\",\n        \"noticeDetails\": \"The mobile application of the EazyBank will be down from 2AM-5AM on 12/05/2020 due to maintenance activities\",\n        \"noticBegDt\": \"2024-02-09T00:00:00.000+00:00\",\n        \"noticEndDt\": \"2024-04-09T00:00:00.000+00:00\",\n        \"createDt\": \"2024-03-10T00:00:00.000+00:00\",\n        \"updateDt\": null\n    },\n    {\n        \"noticeId\": 4,\n        \"noticeSummary\": \"E Auction notice\",\n        \"noticeDetails\": \"There will be a e-auction on 12/08/2020 on the Bank website for all the stubborn arrears.Interested parties can participate in the e-auction\",\n        \"noticBegDt\": \"2024-02-09T00:00:00.000+00:00\",\n        \"noticEndDt\": \"2024-04-09T00:00:00.000+00:00\",\n        \"createDt\": \"2024-03-10T00:00:00.000+00:00\",\n        \"updateDt\": null\n    },\n    {\n        \"noticeId\": 5,\n        \"noticeSummary\": \"Launch of Millennia Cards\",\n        \"noticeDetails\": \"Millennia Credit Cards are launched for the premium customers of EazyBank. With these cards, you will get 5% cashback for each purchase\",\n        \"noticBegDt\": \"2024-02-09T00:00:00.000+00:00\",\n        \"noticEndDt\": \"2024-04-09T00:00:00.000+00:00\",\n        \"createDt\": \"2024-03-10T00:00:00.000+00:00\",\n        \"updateDt\": null\n    },\n    {\n        \"noticeId\": 6,\n        \"noticeSummary\": \"COVID-19 Insurance\",\n        \"noticeDetails\": \"EazyBank launched an insurance policy which will cover COVID-19 expenses. Please reach out to the branch for more details\",\n        \"noticBegDt\": \"2024-02-09T00:00:00.000+00:00\",\n        \"noticEndDt\": \"2024-04-09T00:00:00.000+00:00\",\n        \"createDt\": \"2024-03-10T00:00:00.000+00:00\",\n        \"updateDt\": null\n    }\n]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "welcome",
+			"item": [
+				{
+					"name": "sayWelcome",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8585/api/welcome",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8585",
+							"path": [
+								"api",
+								"welcome"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

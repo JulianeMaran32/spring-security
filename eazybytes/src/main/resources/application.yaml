@@ -1,7 +1,7 @@
 server:
   port: 8585
-  servlet:
-    context-path: /api
+#  servlet:
+#    context-path: /api
 
 spring:
   application:
@@ -9,7 +9,7 @@ spring:
   devtools:
     add-properties: true # habilitado
   datasource:
-    url: jdbc:mysql://localhost:3306/eazybytes?createDatabaseIfNotExist=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/eazybank?createDatabaseIfNotExist=true&serverTimezone=UTC
     username: root
     password: root
   jpa:

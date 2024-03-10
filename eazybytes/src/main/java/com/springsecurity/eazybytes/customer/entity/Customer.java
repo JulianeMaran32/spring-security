@@ -1,12 +1,14 @@
 package com.springsecurity.eazybytes.customer.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -15,13 +17,20 @@ public class Customer {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Column(name = "customer_id")
+	private int id;
 
-	@Email
+	private String name;
+
 	private String email;
 
+	private String mobileNumber;
+
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String pwd;
 
 	private String role;
+
+	private String createDt;
 
 }

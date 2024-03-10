@@ -38,13 +38,13 @@ public class ApiAuthentitcationProvider implements AuthenticationProvider {
 				List<GrantedAuthority> authorities = new ArrayList<>();
 				authorities.add(new SimpleGrantedAuthority(customer.get().getRole()));
 				return new UsernamePasswordAuthenticationToken(username, pwd, authorities);
+			} else {
+				throw new BadCredentialsException("Invalid password!");
 			}
 
-			throw new BadCredentialsException("Invalid password!");
-
+		} else {
+			throw new BadCredentialsException("No user registered with this details!");
 		}
-
-		throw new BadCredentialsException("No user registered with this details!");
 
 	}
 
