@@ -10,18 +10,35 @@ import org.springframework.security.web.SecurityFilterChain;
 public class ApiSecurityConfig {
 
 	/**
-	 * Configuration to deny all the requests
+	 * Below is the custom security configurations
 	 */
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 
 		http
-				.authorizeHttpRequests(request -> request.anyRequest().denyAll())
+				.authorizeHttpRequests(request -> request
+						.requestMatchers("/myAccount", "/myBalance", "/myLoans", "/myCards").authenticated()
+						.requestMatchers("/api", "/notices", "/contact").permitAll()
+				)
 				.formLogin(Customizer.withDefaults())
 				.httpBasic(Customizer.withDefaults());
 		return http.build();
 
 	}
+
+	/**
+	 * Configuration to deny all the requests
+	 */
+//	@Bean
+//	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+//
+//		http
+//				.authorizeHttpRequests(request -> request.anyRequest().denyAll())
+//				.formLogin(Customizer.withDefaults())
+//				.httpBasic(Customizer.withDefaults());
+//		return http.build();
+//
+//	}
 
 
 	/**
