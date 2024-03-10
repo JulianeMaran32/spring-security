@@ -1,13 +1,12 @@
-package com.springsecurity.eazybytes.customer.entity;
+package com.springsecurity.eazybytes.notices;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -16,24 +15,25 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "customers")
-public class Customer {
+@Table(name = "loans")
+public class Notice {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long noticeId;
 
-	@Email
-	private String email;
+	private String noticeSummary;
 
-	private String mobileNumber;
+	private String noticeDetails;
 
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	private String pwd;
+	private LocalDateTime noticBegDt;
 
-	private String role;
+	private LocalDateTime noticEndDt;
 
 	@CreationTimestamp
 	private LocalDateTime createDt;
+
+	@UpdateTimestamp
+	private LocalDateTime updateDt;
 
 }

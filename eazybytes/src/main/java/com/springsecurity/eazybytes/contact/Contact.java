@@ -1,6 +1,5 @@
-package com.springsecurity.eazybytes.customer.entity;
+package com.springsecurity.eazybytes.contact;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
@@ -16,22 +15,21 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "customers")
-public class Customer {
+@Table(name = "contact_messages")
+public class Contact {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long contactId;
+
+	private String contactName;
 
 	@Email
-	private String email;
+	private String contactEmail;
 
-	private String mobileNumber;
+	private String subject;
 
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	private String pwd;
-
-	private String role;
+	private String message;
 
 	@CreationTimestamp
 	private LocalDateTime createDt;

@@ -1,8 +1,6 @@
-package com.springsecurity.eazybytes.customer.entity;
+package com.springsecurity.eazybytes.loans;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,22 +14,24 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "customers")
-public class Customer {
+@Table(name = "loans")
+public class Loans {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long loanId;
 
-	@Email
-	private String email;
+	private Long customerId;
 
-	private String mobileNumber;
+	private LocalDateTime startDt;
 
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	private String pwd;
+	private String loanType;
 
-	private String role;
+	private Integer totalLoan;
+
+	private Integer amountPaid;
+
+	private Integer outstandingAmount;
 
 	@CreationTimestamp
 	private LocalDateTime createDt;
