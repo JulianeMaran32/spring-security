@@ -1,4 +1,4 @@
-package com.springsecurity.eazybytes.security;
+package com.springsecurity.eazybytes.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

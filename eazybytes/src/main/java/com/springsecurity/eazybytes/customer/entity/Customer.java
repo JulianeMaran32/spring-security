@@ -1,4 +1,4 @@
-package com.springsecurity.eazybytes.customer;
+package com.springsecurity.eazybytes.customer.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

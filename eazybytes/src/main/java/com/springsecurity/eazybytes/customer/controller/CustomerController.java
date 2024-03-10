@@ -1,5 +1,7 @@
-package com.springsecurity.eazybytes.customer;
+package com.springsecurity.eazybytes.customer.controller;
 
+import com.springsecurity.eazybytes.customer.repository.CustomerRepository;
+import com.springsecurity.eazybytes.customer.entity.Customer;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
