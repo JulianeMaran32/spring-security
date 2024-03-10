@@ -4,37 +4,35 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableWebSecurity
 public class ApiSecurityConfig {
 
 	/**
-	 * Below is the custom security configurations
+	 * Configurações personalizadas de segurança para proteger o sistema contra acesso não autorizado, uso indevido e
+	 * outras ameaças.
 	 */
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-
-		http
-				.authorizeHttpRequests(request -> request
-						.requestMatchers("/myAccount", "/myBalance", "/myLoans", "/myCards").authenticated()
-						.requestMatchers("/api", "/notices", "/contact", "/welcome",
-								"/customers", "/customers/register").permitAll()
-				)
+		http.csrf((csrf) -> csrf.disable())
+				.authorizeHttpRequests((requests) -> requests
+						.requestMatchers("/myAccount", "/myBalance",
+								"/myLoans", "/myCards").authenticated()
+						.requestMatchers("/api", "/notices",
+								"/contact", "/customers/register").permitAll())
 				.formLogin(Customizer.withDefaults())
 				.httpBasic(Customizer.withDefaults());
 		return http.build();
-
 	}
 
-	/**
-	 * NoOpPasswordEncoder is not recommended for production usage. Use only for non-prod.
-	 */
 	@Bean
 	public PasswordEncoder passwordEncoder() {
-		return NoOpPasswordEncoder.getInstance();
+		return new BCryptPasswordEncoder();
 	}
 
 	/**
@@ -51,7 +49,6 @@ public class ApiSecurityConfig {
 //
 //	}
 
-
 	/**
 	 * Configuration to permit all the requests
 	 */
@@ -64,6 +61,16 @@ public class ApiSecurityConfig {
 //				.httpBasic(Customizer.withDefaults());
 //		return http.build();
 //
+//	}
+
+	/**
+	 * NoOpPasswordEncoder is not recommended for production usage.
+	 * <p>
+	 * Use only for non-prod
+	 */
+//	@Bean
+//	public PasswordEncoder passwordEncoder() {
+//		return NoOpPasswordEncoder.getInstance();
 //	}
 
 }

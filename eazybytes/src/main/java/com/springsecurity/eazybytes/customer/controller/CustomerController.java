@@ -1,10 +1,11 @@
 package com.springsecurity.eazybytes.customer.controller;
 
-import com.springsecurity.eazybytes.customer.repository.CustomerRepository;
 import com.springsecurity.eazybytes.customer.entity.Customer;
+import com.springsecurity.eazybytes.customer.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,15 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerController {
 
 	private final CustomerRepository customerRepository;
+	PasswordEncoder passwordEncoder;
 
 	@PostMapping("/register")
-	public ResponseEntity<String> registerCustomer(@RequestBody Customer customer) {
+	public ResponseEntity<String> registerUser(@RequestBody Customer customer) {
 
 		Customer savedCustomer = null;
 		ResponseEntity response = null;
 
 		try {
 
+			String hashPwd = passwordEncoder.encode(customer.getPwd());
+			customer.setPwd(hashPwd);
 			savedCustomer = customerRepository.save(customer);
 
 			if (savedCustomer.getId() > 0) {
