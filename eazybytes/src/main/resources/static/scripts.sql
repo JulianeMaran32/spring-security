@@ -1,6 +1,6 @@
-CREATE DATABASE eazybank;
+CREATE DATABASE eazybytes;
 
-CREATE TABLE IF NOT EXISTS eazybank.users
+CREATE TABLE IF NOT EXISTS eazybytes.users
 (
     id       BIGINT      NOT NULL AUTO_INCREMENT,
     username VARCHAR(45) NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS eazybank.users
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS eazybank.authorities
+CREATE TABLE IF NOT EXISTS eazybytes.authorities
 (
     id        BIGINT      NOT NULL AUTO_INCREMENT,
     username  VARCHAR(45) NOT NULL,
@@ -17,12 +17,12 @@ CREATE TABLE IF NOT EXISTS eazybank.authorities
     PRIMARY KEY (id)
 );
 
-INSERT IGNORE INTO eazybank.users (username, password, enabled)
+INSERT IGNORE INTO eazybytes.users (username, password, enabled)
 VALUES ('happy', '12345', '1');
-INSERT IGNORE INTO eazybank.authorities (username, authority)
+INSERT IGNORE INTO eazybytes.authorities (username, authority)
 VALUES ('happy', 'write');
 
-CREATE TABLE IF NOT EXISTS eazybank.customer
+CREATE TABLE IF NOT EXISTS eazybytes.customers
 (
     id    BIGINT       NOT NULL AUTO_INCREMENT,
     email VARCHAR(255) NOT NULL,
@@ -31,5 +31,5 @@ CREATE TABLE IF NOT EXISTS eazybank.customer
     PRIMARY KEY (id)
 );
 
-INSERT IGNORE INTO eazybank.customer (email, pwd, role)
+INSERT IGNORE INTO eazybytes.customers (email, pwd, role)
 VALUES ('johndoe@example.com', '54321', 'admin');
