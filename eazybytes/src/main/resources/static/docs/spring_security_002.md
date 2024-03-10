@@ -1,4 +1,63 @@
-# Changing the defulat security configurations
+## Serviços REST Backend para Aplicativo EazyBank
+
+### Serviços sem nenhuma segurança
+
+* `/contact` (contato): este serviço deve aceitar os detalhes do formulário da página "Entre em Contato" na interface do
+  usuário e salvá-los no banco de dados.
+* `/notices` (avisos): este serviço deve enviar os detalhes do aviso do banco de dados para a página "AVISOS" na
+  interface do usuário.
+
+### Serviços com segurança
+
+* `/myAccount` (minha conta):  este serviço deve enviar os detalhes da conta do usuário logado do banco de dados para a
+  interface do usuário.
+* `/myBalance` (meu saldo): este serviço deve enviar o saldo e os detalhes da transação do usuário logado do banco de
+  dados para a interface do usuário.
+* `/myLoans` (meus empréstimos): este serviço deve enviar os detalhes do empréstimo do usuário logado do banco de dados
+  para a interface do usuário.
+* `/myCards` (meus cartões): este serviço deve enviar os detalhes do cartão do usuário logado do banco de dados para a
+  interface do usuário.
+
+### Configurações de Segurança Padrão
+
+Dentro do Framework Spring Security
+
+Por padrão, o Spring Security Framework protege todos os caminhos presentes dentro do aplicativo web. Esse comportamento
+é devido ao código presente dentro do método `defaultSecurityFilterChain(HttpSecurity http)` da
+classe `SpringBootWebSecurityConfiguration`.
+
+```java
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
+
+public class SecurityConfig {
+
+	@Bean
+	@Order(SecurityProperties.BASIC_AUTH_ORDER)
+	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+		http.authorizeHttpRequests((requests) -> requests.requestMatchers().authenticated())
+				.formLogin(Customizer.withDefaults())
+				.httpBasic(Customizer.withDefaults());
+		return http.build();
+	}
+
+}
+```
+
+---
+
+NOTA IMPORTANTE:
+
+Por padrão, o **Spring Security Framework** protege todos os caminhos presentes dentro da aplicação web. Esse
+comportamento é devido ao código presente dentro do método `defaultSecurityFilterChain(HttpSecurity http)` da
+classe `SpringBootWebSecurityConfiguration`.
+
+```yaml
+spring:
+  security:
+    user:
+      name: admin
+      password: 12345678
+```
 
 A partir das versões **Spring Security 6.1** e **Spring Boot 3.1.0**, a equipe do framework Spring Security recomenda o
 uso do estilo Lambda DSL para configurar a segurança de APIs, caminhos da web etc. Consequentemente, alguns métodos do
@@ -68,58 +127,12 @@ compreender o estilo Lambda DSL, mas se tiver alguma dúvida, não hesite em ent
 * O Spring Security DSL possui um estilo de configuração semelhante a outros DSLs do Spring, como Spring Integration e
   Spring Cloud Gateway.
 
-### Configurando Usuários
+---
 
-Observação: Não é recomendado utilizar em produção.
+### Custom Security Configuration
 
-Ao invés de definir um único usuário dentro do application.yaml, como próximo passo, podemos definir vários usuários
-junto com suas autorizações com a ajuda do `InMemoryUserDetailsManager` e `UserDetails`.
-
-* A Abordagem 1 usa o método `withDefaultPasswordEncoder()` para criar os detalhes do usuário.
-
-```java
-
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-
-@Configuration
-public class SecurityConfig {
-
-	/**
-	 * Approach 1 where we use `withDefaultPasswordEncoder()` method while creating the user details.
-	 * InMemoryUserDetailsManager: Gerador de usuários em memória
-	 * UserDetails: detalhes do usuário
-	 * withDefaultPasswordEncoder(): com codificador de senha padrão
-	 */
-	@SuppressWarnings("deprecation")
-	@Bean
-	public InMemoryUserDetailsManager userDetailsManager() {
-
-		UserDetails admin = User.withDefaultPasswordEncoder()
-				.username("admin") // nome do usuário
-				.password("12345") // senha
-				.authorities("admin") // authoridades (permissões do usuário)
-				.build(); // constrói o objeto UserDetails
-
-		UserDetails user = User.withDefaultPasswordEncoder()
-				.username("user") // nome do usuário
-				.password("12345") // senha
-				.authorities("read") // permissão leitura
-				.build(); // constrói o objeto UserDetails
-
-		return new InMemoryUserDetailsManager(admin, user);
-
-	}
-
-}
-```
-
-* A Abordagem 2 utiliza o `NoOpPasswordEncoder` `Bean` ao criar os detalhes do usuário.
-
-**Observação**: É importante ressaltar que o `NoOpPasswordEncoder` NÃO É SEGURO para ambientes de produção. Ele armazena
-as senhas como plain text, o que as torna vulneráveis a ataques. Use esta abordagem apenas para fins de desenvolvimento
-ou demonstração.
+Podemos proteger as APIs e caminhos da aplicação web de acordo com nossos requisitos personalizados usando o framework
+Spring Security, como mostrado abaixo:
 
 ```java
 
@@ -127,26 +140,58 @@ ou demonstração.
 public class SecurityConfig {
 
 	@Bean
-	public InMemoryUserDetailsManager userDetailsManager() {
-
-		UserDetails admin = User.withUsername("admin") // nome do usuário
-				.password("12345") // senha
-				.authorities("admin") // authoridades (permissões do usuário)
-				.build(); // constrói o objeto UserDetails
-
-		UserDetails user = User.withUsername("user") // nome do usuário
-				.password("12345") // senha
-				.authorities("read") // permissão leitura
-				.build(); // constrói o objeto UserDetails
-
-		return new InMemoryUserDetailsManager(admin, user);
-
+	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+		http.authorizeHttpRequests((requests) -> requests
+						.requestMatchers("/myAccount", "/myBalance", "/myLoans", "/myCards").authenticated()
+						.requestMatchers("/notices", "/contact").permitAll())
+				.formLogin(Customizer.withDefaults())
+				.httpBasic(Customizer.withDefaults());
+		return http.build();
 	}
 
-	@SuppressWarnings("deprecation")
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return NoOpPasswordEncoder.getInstance();
-	}
 }
 ```
+
+### Negar tudo
+
+Podemos **negar** todas as solicitações que chegam às APIs e caminhos da sua aplicação web usando o framework Spring
+Security, como mostrado abaixo:
+
+```java
+
+@Configuration
+public class SecurityConfig {
+
+	@Bean
+	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+		http.authorizeHttpRequests((requests) -> requests.requestMatchers().denyAll())
+				.formLogin(Customizer.withDefaults())
+				.httpBasic(Customizer.withDefaults());
+		return http.build();
+	}
+
+}
+```
+
+### Permitir tudo
+
+É possível permitir todas as solicitações que chegam às APIs e caminhos da sua aplicação web usando o Spring Security,
+mas é importante ressaltar que isso não é recomendado para a maioria dos cenários.
+
+```java
+
+@Configuration
+public class SecurityConfig {
+
+	@Bean
+	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+		http.authorizeHttpRequests((requests) -> requests.requestMatchers().permitAll())
+				.formLogin(Customizer.withDefaults())
+				.httpBasic(Customizer.withDefaults());
+		return http.build();
+	}
+
+}
+```
+
+

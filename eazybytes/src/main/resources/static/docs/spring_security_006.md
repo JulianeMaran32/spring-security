@@ -1,70 +1,82 @@
-### Authentication Provider (Provedor de Autenticação)
+## Entendendo CORs & CSRF
 
-![Authentication Provider](./img/spring_security_authentication_provider.png)
+* CORS: Cross-Origin Resource Sharing
+* CSRF: Cross-Site Request Forgery
+* Spring Security: How to handle them using the spring security framework?
 
-* **Por que precisamos disso?**
-    * Requisito 1: Aceitar autenticação por nome de usuário e senha.
-    * Requisito 2: Aceitar autenticação OAUTH2.
-    * Requisito 3: Aceitar autenticação por OTP (senha única).
+### Cross-Origin Resource Sharing (CORS)
 
-O `AuthenticationProvider` no Spring Security cuida da lógica de autenticação. A implementação padrão
-do `AuthenticationProvider` delega a responsabilidade de encontrar o usuário no sistema para a
-implementação `UserDetailsService` e o `PasswordEncoder` para validação de senha. Mas se temos um requisito de
-autenticação personalizado que não é atendido pela estrutura do Spring Security, podemos construir nossa própria lógica
-de autenticação implementando a interface `AuthenticationProvider`.
+Compartilhamento de Recursos entre Origens (CORS)
 
-É responsabilidade do `ProviderManager`, que é uma implementação do `AuthenticationManager`, verificar todas as
-implementações de `AuthenticationProviders` e tentar autenticar o usuário.
+CORS é um protocolo que permite que scripts executados em um navegador cliente interajam com recursos de uma origem
+diferente. Por exemplo, se um aplicativo de interface do usuário deseja fazer uma chamada de API em execução em um
+domínio diferente, ele seria bloqueado por padrão devido ao CORS. É uma especificação do W3C implementada pela maioria
+dos navegadores.
 
-### Detalhes do Authentication Provider
+Portanto, CORS não é um problema/ataque de segurança, mas a proteção padrão fornecida pelos navegadores para impedir o
+compartilhamento de dados/comunicação entre diferentes origens.
 
-* Métodos dentro da interface `AuthenticationProvider`
+"Origens diferentes" significa que o URL acessado difere do local de execução do JavaScript, por ter:
+
+* um esquema diferente (HTTP or HTTPS)
+* um domínio diferente
+* uma porta diferente
+
+Por padrão, o navegador bloqueará essa comunicação devido ao CORS.
+
+* Aplicativo de interface do usuário em execução em https://domain1.com
+* API de back-end em execução em https://domain2.com
+
+![Cross-Origin Resource Sharing](./img/spring_security_cors_001.png)
+
+### Solução para lidar com CORS
+
+Se temos um cenário válido, onde uma interface do usuário de um aplicativo web implantada em um servidor está tentando
+se comunicar com um serviço REST implantado em outro servidor, podemos permitir esse tipo de comunicação com a ajuda da
+anotação `@CrossOrigin`. `@CrossOrigin` permite que clientes de qualquer domínio consumam a API.
+
+A anotação `@CrossOrigin` pode ser mencionada no topo de uma classe ou método, como mencionado abaixo:
+
+* `@CrossOrigin(origins = "http://localhost:4200")` // Permitirá no domínio especificado
+* `@CrossOrigin(origins = "*")` // Permitirá em qualquer domínio
+
+* **Depois que o CORS é habilitado no back-end:**
+    * Aplicativo de interface do usuário em execução em https://domain1.com
+    * API de back-end em execução em https://domain2.com
+
+![Solution to handle CORS](./img/spring_security_cors_002.png)
+
+Em vez de mencionar a anotação `@CrossOrigin` em todos os controladores dentro do nosso aplicativo web, podemos definir
+configurações relacionadas ao CORS globalmente usando o Spring Security, conforme mostrado abaixo:
 
 ```java
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 
-public interface AuthenticationProvider {
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
 
-	Authentication authenticate(Authentication authentication)
-			throws AuthenticationException;
+	@Bean
+	public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 
-	boolean supports(Class<?> authentication);
+		http
+				.csrf(AbstractHttpConfigurer::disable)
+				.cors(cors -> cors.configurationSource(request -> {
+					var config = new CorsConfiguration();
+					config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+					config.setAllowedMethods(Collections.singletonList("*"));
+					config.setAllowCredentials(true);
+					config.setAllowedHeaders(Collections.singletonList("*"));
+					config.setMaxAge(3600L);
+					return config;
+				}))
+				.authorizeHttpRequests((requests) -> requests
+						.requestMatchers("/users/**", "/services/**").authenticated()
+						.requestMatchers("/api/petshop/**", "/customers/register").permitAll())
+				.formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
+				.sessionManagement(Customizer.withDefaults())
+				.httpBasic(Customizer.withDefaults());
+		return http.build();
+	}
 
-}
+}    
 ```
-
-O método `authenticate()` recebe e retorna um objeto de autenticação. Podemos implementar toda a nossa lógica de
-autenticação personalizada dentro do método `authenticate()`.
-
-O segundo método na interface `AuthenticationProvider` é `supports (Class <?> authentication)`. Você implementará este
-método para retornar true se o `AuthenticationProvider` atual suportar o tipo do objeto `Authentication` fornecido.
-
-Ao utilizar a classe `PetshopAuthenticationProvider`, deixamos de usar a `PetshopUserDetailsService`
-
-### Fluxo de Sequência com nossa própria implementação de `AuthenticationProvider`
-
-![With our own AuthenticationProvider implementation 1](./img/spring_security_sequence_flow_with_AuthenticationProvider_implementation.png)
-
-1. Usuário tenta acessar pela primeira vez uma página segura.
-2. Nos bastidores, alguns filtros como `AuthorizationFilter` e `DefaultLoginPageGeneratingFilter` identificam que o
-   usuário não está logado e o redirecionam para a página de login.
-3. O usuário insere suas credenciais e a requisição é interceptada pelos filtros.
-4. Filtros como `UsernamePasswordAuthenticationFilter` extraem o nome de usuário e a senha da requisição e criam um
-   objeto `UsernamePasswordAuthenticationToken`, que é uma implementação da interface `Authentication`. Com o objeto
-   criado, ele invoca o método `authenticate()` do `ProviderManager`.
-5. O `ProviderManager`, que é uma implementação de `AuthenticationMananger`, identifica a lista
-   de `AuthenticationProviders` disponíveis que suportam o estilo do objeto de autenticação fornecido. Neste cenário, o
-   método `authenticate()` do nosso `AuthenticationProvider` personalizado será invocado pelo `ProviderManager`
-6. O `PetshopAuthenticationProvider` carrega os detalhes do usuário do banco de dados. Uma vez que os detalhes do
-   usuário são carregados, ele utiliza o `BCryptPasswordEncoder` configurado para comparar a senha e validar se o
-   usuário é autêntico ou não.
-7. Por fim, ele retorna o objeto `Authentication` com os detalhes de sucesso ou falha da autenticação para
-   o `ProviderManager`.
-8. O `ProviderManager` verifica se a autenticação foi bem-sucedida ou não. Se não, ele tentará com
-   outros `AuthenticationProvider` disponíveis. Caso contrário, ele simplesmente retorna os detalhes de autenticação
-   para os filtros.
-9. O objeto `Authentication` é armazenado no objeto `SecurityContext` pelo filtro para uso futuro e a resposta é
-   retornada ao usuário final.
-
-![With our own AuthenticationProvider implementation 2](./img/spring_security_sequence_flow_with_AuthenticationProvider.png)
