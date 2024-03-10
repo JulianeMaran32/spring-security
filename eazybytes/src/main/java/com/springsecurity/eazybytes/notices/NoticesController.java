@@ -1,4 +1,4 @@
-package com.springsecurity.eazybytes.controller;
+package com.springsecurity.eazybytes.notices;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
