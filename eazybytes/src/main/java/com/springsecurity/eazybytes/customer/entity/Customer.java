@@ -2,14 +2,10 @@ package com.springsecurity.eazybytes.customer.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -21,9 +17,11 @@ public class Customer {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Column(name = "customer_id")
+	private int id;
 
-	@Email
+	private String name;
+
 	private String email;
 
 	private String mobileNumber;
@@ -33,7 +31,6 @@ public class Customer {
 
 	private String role;
 
-	@CreationTimestamp
-	private LocalDateTime createDt;
+	private String createDt;
 
 }

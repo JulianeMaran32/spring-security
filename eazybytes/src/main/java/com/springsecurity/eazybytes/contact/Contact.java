@@ -1,12 +1,12 @@
 package com.springsecurity.eazybytes.contact;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -19,19 +19,17 @@ import java.time.LocalDateTime;
 public class Contact {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long contactId;
+	private String contactId;
 
 	private String contactName;
 
-	@Email
 	private String contactEmail;
 
 	private String subject;
 
 	private String message;
 
-	@CreationTimestamp
 	private LocalDateTime createDt;
+
 
 }

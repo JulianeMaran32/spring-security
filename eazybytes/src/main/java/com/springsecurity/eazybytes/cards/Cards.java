@@ -5,9 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -19,21 +18,20 @@ public class Cards {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long cardId;
+	private int cardId;
 
-	private Long customerId;
+	private int customerId;
 
 	private String cardNumber;
 
 	private String cardType;
 
-	private Integer totalLimit;
+	private int totalLimit;
 
-	private Integer amountUsed;
+	private int amountUsed;
 
-	private Integer availableAmount;
+	private int availableAmount;
 
-	@CreationTimestamp
-	private LocalDateTime createDt;
+	private Date createDt;
 
 }

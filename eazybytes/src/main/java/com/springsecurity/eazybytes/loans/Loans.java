@@ -5,9 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -19,21 +18,20 @@ public class Loans {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long loanId;
+	private int loanNumber;
 
-	private Long customerId;
+	private int customerId;
 
-	private LocalDateTime startDt;
+	private Date startDt;
 
 	private String loanType;
 
-	private Integer totalLoan;
+	private int totalLoan;
 
-	private Integer amountPaid;
+	private int amountPaid;
 
-	private Integer outstandingAmount;
+	private int outstandingAmount;
 
-	@CreationTimestamp
-	private LocalDateTime createDt;
+	private String createDt;
 
 }

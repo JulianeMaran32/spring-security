@@ -5,9 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -19,19 +18,22 @@ public class AccountTransactions {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long transactionId;
+	private String transactionId;
 
-	private Long accountNumber;
+	private int accountNumber;
 
-	private Long customerId;
+	private int customerId;
 
-	private LocalDateTime transactionDt;
+	private Date transactionDt;
+
+	private String transactionSummary;
 
 	private String transactionType;
 
-	private Integer closingBalance;
+	private int transactionAmt;
 
-	@CreationTimestamp
-	private LocalDateTime createDt;
+	private int closingBalance;
+
+	private String createDt;
 
 }

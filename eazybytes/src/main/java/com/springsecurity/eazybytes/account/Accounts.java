@@ -5,9 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -19,15 +16,14 @@ public class Accounts {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long accountNumber;
+	private int accountNumber;
 
-	private Long customerId;
+	private int customerId;
 
 	private String accountType;
 
 	private String branchAddress;
 
-	@CreationTimestamp
-	private LocalDateTime createDt;
+	private String createDt;
 
 }

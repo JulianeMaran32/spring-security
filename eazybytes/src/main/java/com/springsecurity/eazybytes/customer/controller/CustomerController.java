@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping
 @AllArgsConstructor
 public class CustomerController {
 
@@ -33,7 +33,7 @@ public class CustomerController {
 
 			String hashPwd = passwordEncoder.encode(customer.getPwd());
 			customer.setPwd(hashPwd);
-			customer.setCreateDt(LocalDateTime.now());
+			customer.setCreateDt(String.valueOf(new Date(System.currentTimeMillis())));
 			savedCustomer = customerRepository.save(customer);
 
 			if (savedCustomer.getId() > 0) {

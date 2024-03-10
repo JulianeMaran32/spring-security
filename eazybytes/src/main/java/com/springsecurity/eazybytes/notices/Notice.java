@@ -5,10 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -16,12 +13,12 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "loans")
+@Table(name = "notice_details")
 public class Notice {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long noticeId;
+	private int noticeId;
 
 	private String noticeSummary;
 
@@ -31,10 +28,8 @@ public class Notice {
 
 	private Date noticEndDt;
 
-	@CreationTimestamp
-	private LocalDateTime createDt;
+	private Date createDt;
 
-	@UpdateTimestamp
-	private LocalDateTime updateDt;
+	private Date updateDt;
 
 }
