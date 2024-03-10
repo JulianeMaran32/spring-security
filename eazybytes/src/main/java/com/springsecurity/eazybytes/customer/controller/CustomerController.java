@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerController {
 
 	private final CustomerRepository customerRepository;
-	private final PasswordEncoder passwordEncoder;
+	PasswordEncoder passwordEncoder;
 
 	@PostMapping("/register")
 	public ResponseEntity<String> registerUser(@RequestBody Customer customer) {
