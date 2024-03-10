@@ -14,7 +14,8 @@ import org.springframework.security.web.SecurityFilterChain;
 public class ApiSecurityConfig {
 
 	/**
-	 * Below is the custom security configurations
+	 * Configurações personalizadas de segurança para proteger o sistema contra acesso não autorizado, uso indevido e
+	 * outras ameaças.
 	 */
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -35,14 +36,6 @@ public class ApiSecurityConfig {
 	}
 
 	/**
-	 * NoOpPasswordEncoder is not recommended for production usage. Use only for non-prod.
-	 */
-//	@Bean
-//	public PasswordEncoder passwordEncoder() {
-//		return NoOpPasswordEncoder.getInstance();
-//	}
-
-	/**
 	 * Configuration to deny all the requests
 	 */
 //	@Bean
@@ -56,7 +49,6 @@ public class ApiSecurityConfig {
 //
 //	}
 
-
 	/**
 	 * Configuration to permit all the requests
 	 */
@@ -69,6 +61,16 @@ public class ApiSecurityConfig {
 //				.httpBasic(Customizer.withDefaults());
 //		return http.build();
 //
+//	}
+
+	/**
+	 * NoOpPasswordEncoder is not recommended for production usage.
+	 * <p>
+	 * Use only for non-prod
+	 */
+//	@Bean
+//	public PasswordEncoder passwordEncoder() {
+//		return NoOpPasswordEncoder.getInstance();
 //	}
 
 }
