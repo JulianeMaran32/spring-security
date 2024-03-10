@@ -10,17 +10,32 @@ import org.springframework.security.web.SecurityFilterChain;
 public class ApiSecurityConfig {
 
 	/**
-	 * Configuration to permit all the requests
+	 * Configuration to deny all the requests
 	 */
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 
 		http
-				.authorizeHttpRequests(request -> request.anyRequest().permitAll())
+				.authorizeHttpRequests(request -> request.anyRequest().denyAll())
 				.formLogin(Customizer.withDefaults())
 				.httpBasic(Customizer.withDefaults());
 		return http.build();
 
 	}
+
+
+	/**
+	 * Configuration to permit all the requests
+	 */
+//	@Bean
+//	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+//
+//		http
+//				.authorizeHttpRequests(request -> request.anyRequest().permitAll())
+//				.formLogin(Customizer.withDefaults())
+//				.httpBasic(Customizer.withDefaults());
+//		return http.build();
+//
+//	}
 
 }
