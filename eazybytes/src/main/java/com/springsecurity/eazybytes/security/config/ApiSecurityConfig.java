@@ -1,6 +1,7 @@
 package com.springsecurity.eazybytes.security.config;
 
 import com.springsecurity.eazybytes.security.filter.CsrfCookieFilter;
+import com.springsecurity.eazybytes.security.filter.RequestValidationBeforeFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -27,7 +28,8 @@ public class ApiSecurityConfig {
 	 */
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-		CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
+
+		var requestHandler = new CsrfTokenRequestAttributeHandler();
 		requestHandler.setCsrfRequestAttributeName("_csrf");
 
 		http.securityContext((context) -> context
@@ -45,16 +47,21 @@ public class ApiSecurityConfig {
 						.ignoringRequestMatchers("/contact", "/register")
 						.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
 				.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+				.addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+//				.addFilterAt(new AuthorizatiesLogginAtFilter(), BasicAuthenticationFilter.class)
+//				.addFilterAfter(new AuthorizatiesLogginAfterFilter(), BasicAuthenticationFilter.class)
 				.authorizeHttpRequests((requests) -> requests
 						.requestMatchers("/myAccount").hasRole("USER")
-						.requestMatchers("/myBalance").hasAnyRole("USER","ADMIN")
+						.requestMatchers("/myBalance").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/myLoans").hasRole("USER")
 						.requestMatchers("/myCards").hasRole("USER")
 						.requestMatchers("/user").authenticated()
-						.requestMatchers("/notices","/contact","/register").permitAll())
+						.requestMatchers("/notices", "/contact", "/register").permitAll())
 				.formLogin(Customizer.withDefaults())
 				.httpBasic(Customizer.withDefaults());
+
 		return http.build();
+
 	}
 
 	@Bean
