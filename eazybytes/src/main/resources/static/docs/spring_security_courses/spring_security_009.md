@@ -106,6 +106,16 @@ decodificar, verificar e gerar JWTs.
 
 ![Exemplo de Token JWT](./../img/token_jwt_io.png)
 
+---
+
+**JWT_KEY**: Para gerar manulamente o JWT_KEY, não há nenhum critério, apenas deve certificar-se de que seja uma chave
+complexa e difícil de adivinhar.
+
+Para gerar uma chave token, podemos utilizar o site https://randomkeygen.com/. Optei pela CodeIgniter Encryption Keys,
+pois podem ser usadas para qualquer outro requisito de chave de 256 bits.
+
+---
+
 ## Referências
 
 - [jwt.io](https://jwt.io/)

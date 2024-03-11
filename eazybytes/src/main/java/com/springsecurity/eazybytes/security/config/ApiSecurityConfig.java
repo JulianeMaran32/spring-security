@@ -1,8 +1,9 @@
 package com.springsecurity.eazybytes.security.config;
 
+import com.springsecurity.eazybytes.security.filter.csrf.CsrfCookieFilter;
 import com.springsecurity.eazybytes.security.filter.loggin.AuthorizatiesLogginAfterFilter;
 import com.springsecurity.eazybytes.security.filter.loggin.AuthorizatiesLogginAtFilter;
-import com.springsecurity.eazybytes.security.filter.csrf.CsrfCookieFilter;
+import com.springsecurity.eazybytes.security.filter.token.JWTTokenGeneratorFilter;
 import com.springsecurity.eazybytes.security.filter.validation.RequestValidationBeforeFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,10 +35,11 @@ public class ApiSecurityConfig {
 		var requestHandler = new CsrfTokenRequestAttributeHandler();
 		requestHandler.setCsrfRequestAttributeName("_csrf");
 
-		http.securityContext((context) -> context
-						.requireExplicitSave(false))
-				.sessionManagement(session -> session
-						.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+		http
+				// securityContext: permite configurar como o contexto de segurança é gerenciado entre requisições HTTP
+//				.securityContext((context) -> context.requireExplicitSave(false))
+//				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
 					CorsConfiguration config = new CorsConfiguration();
 					config.setAllowedOrigins(Collections.singletonList("*"));
@@ -53,7 +55,7 @@ public class ApiSecurityConfig {
 				.addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
 				.addFilterAt(new AuthorizatiesLogginAtFilter(), BasicAuthenticationFilter.class)
 				.addFilterAfter(new AuthorizatiesLogginAfterFilter(), BasicAuthenticationFilter.class)
-//				.addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
+				.addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
 //				.addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
 				.authorizeHttpRequests((requests) -> requests
 						.requestMatchers("/myAccount").hasRole("USER")
