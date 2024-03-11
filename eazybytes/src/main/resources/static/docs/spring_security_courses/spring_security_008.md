@@ -39,7 +39,7 @@ logging:
 
 Retorno no console quando ativado o debug:
 
-![](../img/spring_security_enable_web_security_debug_true.png)
+![Retorno no console quando ativado o debug](../img/spring_security_enable_web_security_debug_true.png)
 
 Em anexo estão alguns dos filtros internos do Spring Security que são executados no fluxo de autenticação.
 
@@ -64,4 +64,41 @@ Abaixo estão os métodos disponíveis para configurar um filtro personalizado n
 * `addFilterBefore(filter, class)`: adiciona um filtro antes da posição da classe de filtro especificada.
 * `addFilterAfter(filter, class)`: adiciona um filtro após a posição da classe de filtro especificada.
 * `addFilterAt(filter, class)`: adiciona um filtro no local da classe de filtro especificada.
+
+## Adicionando Filtros no Srping Security
+
+### Add Filter Before
+
+`addFilterBefore(filter, class)`: adiciona um filtro **antes** da posição da classe de filtro especificada.
+
+![Add Filter Before in Spring Security](./../img/spring_security_add_filter_before.png)
+
+Aqui, adicionamos um filtro **antes** da autenticação para implementar nossa própria validação personalizada, onde o
+email fornecido não deve conter a string 'teste'.
+
+### Add Filter After
+
+`addFilterAfter(filter, class)`: adiciona um filtro **após** a posição da classe de filtro especificada.
+
+![Add Filter After in Spring Security](./../img/spring_security_add_filter_after.png)
+
+Aqui, adicionamos um filtro logo **após** a autenticação para registrar em log detalhes de autenticação bem-sucedida e
+informações de autoridade dos usuários logados.
+
+### Add Filter At
+
+`addFilterAt(filter, class)`: adiciona um filtro na **localização** da classe de filtro especificada. Porém, a ordem de
+execução não é garantida. Isso não substituirá os filtros já presentes na mesma ordem.
+
+![Add Filter At in Spring Security](./../img/spring_security_add_filter_at.png)
+
+Como não teremos controle sobre a ordem dos filtros e ela é aleatória por natureza, devemos evitar fornecer filtros na
+mesma ordem.
+
+## Outros Filtros Importantes
+
+* `GenericFilterBean`: Esta é uma classe abstrata de filtro que permite usar os parâmetros de inicialização e
+  configurações definidas dentro dos descritores de implementação.
+* `OncePerRequestFilter`: O Spring Security não garante que seu filtro seja chamado apenas uma vez por requisição. Mas
+  se temos um cenário onde precisamos ter certeza de executar nosso filtro apenas uma vez, podemos usar este.
 
