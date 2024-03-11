@@ -104,3 +104,82 @@ public class ExSecurityConfig {
 	}
 }
 ```
+
+### Authority vs Role
+
+* **Authority** (Autoridade / Permissão)
+    * Uma permissão é como um privilégio individual ou uma ação.
+    * Restringe o acesso de maneira granular.
+    * Ex.: `VIEWACCOUNT`, `VIEWCARDS` etc.
+
+* **Role** (Papel / função)
+    * Papel é um grupo de privilégios/ações.
+    * Restringe o acesso de maneira ampla.
+    * Ex.: `ROLE_ADMIN`, `ROLSE_USER`
+
+* Os nomes das permissões/papéis são arbitrários e podem ser personalizados de acordo com a necessidade do negócio.
+* Funções também são representados usando o mesmo contrato `GrantedAuthority` no Spring Security.
+* Ao definir uma função, seu nome deve começar com o prefixo `ROLE_`. Este prefixo especifica a diferença entre um papel
+  e uma autoridade.
+
+### Configurando Permissões (Authority)
+
+Dentro do Spring Security, os requisitos de ROLE podem ser configurados das seguintes maneiras:
+
+* `hasRole()`: aceita um único nome de role para o qual os endpoints serão configurados e o usuário será validado em
+  relação ao único role mencionado. Somente usuários com o mesmo role configurado podem invocar o endpoint.
+* `hasAnyRole()`: aceita multiplos roles para os quais os endpoints serão configurados e o usuário será validado em
+  relação aos roles mencionados. Somente usuários com qualquer um dos roles configurados podem chamar o endpoint.
+* `access()`: usando a Spring Expression Language (SpEL), ele oferece possibilidades ilimitadas para configurar roles, o
+  que não é possível com os métodos acima. Podemos usar operadores como OR, AND dentro do método `access()`.
+
+**Observações:**
+
+* O prefixo `ROLE_` deve ser usado somente ao configurar o role no banco de dados. Mas quando configuramos os roles,
+  fazemos isso apenas pelo seu nome.
+* O método `access()` pode ser usado não apenas para configurar a autorização com base em permissão ou role, mas também
+  com qualquer requisito especial que tenhamos. Por exemplo, podemos configurar o acesso com base no país do usuário ou
+  na hora/data atual.
+
+### Configurando Funções / Papéis (Roles)
+
+inside Spring Security
+
+Como mostrado abaixo, podemos configurar os requisitos de `ROLE` para as APIs/caminhos.
+
+```java
+public class ApiSecurityConfig {
+
+	@Bean
+	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+		CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
+		requestHandler.setCsrfRequestAttributeName("_csrf");
+
+		http.securityContext((context) -> context
+						.requireExplicitSave(false))
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+				.cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
+					CorsConfiguration config = new CorsConfiguration();
+					config.setAllowedOrigins(Collections.singletonList("*"));
+					config.setAllowedMethods(Collections.singletonList("*"));
+					config.setAllowCredentials(true);
+					config.setAllowedHeaders(Collections.singletonList("*"));
+					config.setMaxAge(3600L);
+					return config;
+				})).csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler)
+						.ignoringRequestMatchers("/contact", "/register")
+						.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+				.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+				.authorizeHttpRequests((requests) -> requests
+						.requestMatchers("/myAccount").hasRole("USER")
+						.requestMatchers("/myBalance").hasAnyRole("USER", "ADMIN")
+						.requestMatchers("/myLoans").hasRole("USER")
+						.requestMatchers("/myCards").hasRole("USER")
+						.requestMatchers("/user").authenticated()
+						.requestMatchers("/notices", "/contact", "/register").permitAll())
+				.formLogin(Customizer.withDefaults())
+				.httpBasic(Customizer.withDefaults());
+		return http.build();
+	}
+}
+```

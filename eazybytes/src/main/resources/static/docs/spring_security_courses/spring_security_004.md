@@ -2,7 +2,7 @@
 
 > Não é recomenado utilizar em produção
 
-![How passwords validated with default PasswordEncoder](./img/spring_security_how_passwords_validated.png)
+![How passwords validated with default PasswordEncoder](../img/spring_security_how_passwords_validated.png)
 
 Armazenar senhas em texto puro dentro de um sistema de armazenamento como um banco de dados trará problemas de
 integridade e confidencialidade. Portanto, essa não é uma abordagem recomendada para aplicativos de produção.
@@ -33,14 +33,14 @@ Diferentes formas de Gerenciamento de Senhas
     * Dados arbitrários junto com a saída de um algoritmo de hashing, pode-se verificar se esses dados correspondem aos
       dados originais de entrada sem a necessidade de ver os dados originais.
 
-![Encoding vs Encryption vs Hashing](./img/spring_security_encoding_encryption_hashing.png)
+![Encoding vs Encryption vs Hashing](../img/spring_security_encoding_encryption_hashing.png)
 
 ### Como a senha é validada (com `Hashing` e `PasswordEncoder`)
 
 Armazenar e gerenciar senhas com hashing é a abordagem recomendada para aplicativos de produção. Com
 vários `PasswordEncoders` disponíveis dentro do Spring Security, nossa vida fica mais fácil.
 
-![How passwords validated with Hashing e PasswordEncoder](./img/spring_security_how_passwords_validated_with_hashing_passwordencoders.png)
+![How passwords validated with Hashing e PasswordEncoder](../img/spring_security_how_passwords_validated_with_hashing_passwordencoders.png)
 
 ### Details of `PasswordEncoder`
 

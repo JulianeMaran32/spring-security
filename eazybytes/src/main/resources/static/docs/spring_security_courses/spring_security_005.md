@@ -1,6 +1,6 @@
 ### Authentication Provider (Provedor de Autenticação)
 
-![Authentication Provider](./img/spring_security_authentication_provider.png)
+![Authentication Provider](../img/spring_security_authentication_provider.png)
 
 * **Por que precisamos disso?**
     * Requisito 1: Aceitar autenticação por nome de usuário e senha.
@@ -44,7 +44,7 @@ Ao utilizar a classe `PetshopAuthenticationProvider`, deixamos de usar a `Petsho
 
 ### Fluxo de Sequência com nossa própria implementação de `AuthenticationProvider`
 
-![With our own AuthenticationProvider implementation 1](./img/spring_security_sequence_flow_with_AuthenticationProvider_implementation.png)
+![With our own AuthenticationProvider implementation 1](../img/spring_security_sequence_flow_with_AuthenticationProvider_implementation.png)
 
 1. Usuário tenta acessar pela primeira vez uma página segura.
 2. Nos bastidores, alguns filtros como `AuthorizationFilter` e `DefaultLoginPageGeneratingFilter` identificam que o
@@ -67,4 +67,4 @@ Ao utilizar a classe `PetshopAuthenticationProvider`, deixamos de usar a `Petsho
 9. O objeto `Authentication` é armazenado no objeto `SecurityContext` pelo filtro para uso futuro e a resposta é
    retornada ao usuário final.
 
-![With our own AuthenticationProvider implementation 2](./img/spring_security_sequence_flow_with_AuthenticationProvider.png)
+![With our own AuthenticationProvider implementation 2](../img/spring_security_sequence_flow_with_AuthenticationProvider.png)

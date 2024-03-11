@@ -83,13 +83,13 @@ public class SecurityConfig {
 
 ### Fluxo Interno do Spring Security
 
-![Spring Security Internal Flow](./img/spring_security_sequence_flow_003.png)
+![Spring Security Internal Flow](../img/spring_security_sequence_flow_003.png)
 
 ### Gerenciamento de Usuários
 
 Classes e interfaces importantes
 
-![User management: Important classes & interfaces](img/spring_security_user_management.png)
+![User management: Important classes & interfaces](../img/spring_security_user_management.png)
 
 * `UserDetailsService` (interface): Interface principal que carrega dados específicos do usuário.
     * `loadUserByUsername(String username)`
@@ -107,7 +107,7 @@ Classes e interfaces importantes
 
 ### Relação entre UserDetails & Authentication
 
-![UserDetails & Authentication relation between them](img/spring_security_userdetails_authentication.png)
+![UserDetails & Authentication relation between them](../img/spring_security_userdetails_authentication.png)
 
 Por que temos duas maneiras separadas de armazenar detalhes do usuário logado?
 
@@ -197,7 +197,7 @@ public class ApiUserDetails implements UserDetailsService {
 
 ### Fluxo Sequencial com nossa própria implementação `UserDetailsService`
 
-![](./img/spring_security_sequence_flow_004.png)
+![](../img/spring_security_sequence_flow_004.png)
 
 1. Usuário tenta acessar uma página segura pela primeira vez.
 2. Nos bastidores, alguns filtros como `AuthorizationFilter`, `DefaultLoginPageGeneratingFilter` identificam que o
@@ -220,4 +220,4 @@ public class ApiUserDetails implements UserDetailsService {
 9. O objeto `Authentication` é armazenado no objeto `SecurityContext` pelo filtro para uso futuro e a resposta é
    retornada ao usuário final.
 
-![](./img/spring_security_sequence_flow_005.png)
+![](../img/spring_security_sequence_flow_005.png)

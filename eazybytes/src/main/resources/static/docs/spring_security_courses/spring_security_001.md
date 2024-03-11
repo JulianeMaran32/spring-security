@@ -76,11 +76,11 @@ usuário/senha, tokens JWT, OAuth2, OpenID etc.
       resposta) e fazer algum trabalho preliminar antes de nossa lógica de negócios. Então, usando os mesmos filtros, o
       Spring Security impõe a segurança com base em nossas configurações dentro de um aplicativo web.
 
-![Servlets & Filters](./img/spring_security_servlets_and_filters.png)
+![Servlets & Filters](../img/spring_security_servlets_and_filters.png)
 
 **Fluxo interno do Spring Security**
 
-![Spring Security interanl flow](./img/spring_security_internal_flow_001.png)
+![Spring Security interanl flow](../img/spring_security_internal_flow_001.png)
 
 1. Usuário insere suas credenciais.
 2. **Spring Security Filters** (Filtros Spring Security): Uma série de filtros intercepta cada requisição e trabalha em
@@ -106,7 +106,7 @@ usuário/senha, tokens JWT, OAuth2, OpenID etc.
 
 Comportamento padrão do Spring Security
 
-![Sequence Flow: Spring Security default Behaviour](./img/spring_security_sequence_flow_001.png)
+![Sequence Flow: Spring Security default Behaviour](../img/spring_security_sequence_flow_001.png)
 
 1. Usuário tenta acessar uma página segura pela primeira vez.
 2. Nos bastidores, alguns filtros como `AuthorizationFilter`, `DefaultLoginPageGeneratingFilter` identificam que o
@@ -129,4 +129,4 @@ Comportamento padrão do Spring Security
 9. O objeto `Authentication` é armazenado no objeto `SecurityContext` pelo filtro para uso futuro e a resposta é
    retornada ao usuário final.
 
-![Sequence Flow: Spring Security default Behaviour 02](./img/spring_security_sequence_flow_002.png)
+![Sequence Flow: Spring Security default Behaviour 02](../img/spring_security_sequence_flow_002.png)

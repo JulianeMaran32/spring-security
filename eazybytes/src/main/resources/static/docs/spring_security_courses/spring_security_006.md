@@ -27,7 +27,7 @@ Por padrão, o navegador bloqueará essa comunicação devido ao CORS.
 * Aplicativo de interface do usuário em execução em https://domain1.com
 * API de back-end em execução em https://domain2.com
 
-![Cross-Origin Resource Sharing](./img/spring_security_cors_001.png)
+![Cross-Origin Resource Sharing](../img/spring_security_cors_001.png)
 
 ### Solução para lidar com CORS
 
@@ -44,7 +44,7 @@ A anotação `@CrossOrigin` pode ser mencionada no topo de uma classe ou método
     * Aplicativo de interface do usuário em execução em https://domain1.com
     * API de back-end em execução em https://domain2.com
 
-![Solution to handle CORS](./img/spring_security_cors_002.png)
+![Solution to handle CORS](../img/spring_security_cors_002.png)
 
 Em vez de mencionar a anotação `@CrossOrigin` em todos os controladores dentro do nosso aplicativo web, podemos definir
 configurações relacionadas ao CORS globalmente usando o Spring Security, conforme mostrado abaixo:
@@ -92,18 +92,18 @@ Imagine que você esteja usando o site netflix.com e o site do atacante seja evi
 **Passo 1**: O usuário do Netflix faz login no Netflix.com e o servidor backend do Netflix fornecerá um cookie que será
 armazenado no navegador com o domínio Netflix.com
 
-![](./img/spring_security_csrf_step_01.png)
+![](../img/spring_security_csrf_step_01.png)
 
 **Passo 2**: O mesmo usuário do Netflix abre o site evil.com em outra aba do navegador.
 
-![](./img/spring_security_csrf_step_02.png)
+![](../img/spring_security_csrf_step_02.png)
 
 **Passo 3**: O usuário, tentado, clica no link malicioso que faz uma solicitação para o Netflix.com. E como o login já
 está presente no mesmo navegador e a solicitação para alterar o e-mail está sendo feita para o mesmo domínio
 Netflix.com, o servidor backend do Netflix.com não consegue diferenciar de onde a solicitação veio. Então, neste caso, o
 evil.com falsificou a solicitação como se estivesse vindo de uma página da interface do usuário do Netflix.com.
 
-![](./img/spring_security_csrf_step_03.png)
+![](../img/spring_security_csrf_step_03.png)
 
 ### Solution to CSRF Attack
 
@@ -119,18 +119,18 @@ armazenado no navegador com o domínio Netflix.com, juntamente com um token CSRF
 sessão de usuário específica. O token CSRF é inserido dentro de parâmetros ocultos dos formulários HTML para evitar a
 exposição a cookies de sessão.
 
-![](./img/spring_security_csrf_step_01_solution.png)
+![](../img/spring_security_csrf_step_01_solution.png)
 
 **Passo 2**: O mesmo usuário do Netflix abre o site evil.com em outra aba do navegador.
 
-![](./img/spring_security_csrf_step_02_solution.png)
+![](../img/spring_security_csrf_step_02_solution.png)
 
 **Passo 3**: O usuário, tentado, clica no link malicioso que faz uma solicitação para o Netflix.com. E como o cookie de
 login já está presente no mesmo navegador e a solicitação para alterar o e-mail está sendo feita para o mesmo domínio
 Netflix.com. Desta vez, o servidor backend do Netflix.com espera o token CSRF junto com o cookie. O token CSRF deve ser
 igual ao valor inicial gerado durante a operação de login.
 
-![](./img/spring_security_csrf_step_03_solution.png)
+![](../img/spring_security_csrf_step_03_solution.png)
 
 O token CSRF será usado pelo servidor do aplicativo para verificar a legitimidade da solicitação do usuário final, se
 ela está vindo da mesma interface do usuário do aplicativo ou não. O servidor do aplicativo rejeita a solicitação se o
