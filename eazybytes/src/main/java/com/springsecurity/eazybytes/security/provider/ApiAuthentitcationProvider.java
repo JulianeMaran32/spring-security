@@ -1,5 +1,6 @@
 package com.springsecurity.eazybytes.security.provider;
 
+import com.springsecurity.eazybytes.auth.Authority;
 import com.springsecurity.eazybytes.customer.entity.Customer;
 import com.springsecurity.eazybytes.customer.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Component
 @AllArgsConstructor
@@ -25,27 +27,28 @@ public class ApiAuthentitcationProvider implements AuthenticationProvider {
 	private final PasswordEncoder passwordEncoder;
 
 	@Override
-	public Authentication authenticate(Authentication authentication)
-			throws AuthenticationException {
-
+	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String username = authentication.getName();
 		String pwd = authentication.getCredentials().toString();
 		Optional<Customer> customer = customerRepository.findByEmail(username);
-
 		if (customer.isPresent()) {
-
 			if (passwordEncoder.matches(pwd, customer.get().getPwd())) {
-				List<GrantedAuthority> authorities = new ArrayList<>();
-				authorities.add(new SimpleGrantedAuthority(customer.get().getRole()));
-				return new UsernamePasswordAuthenticationToken(username, pwd, authorities);
+				return new UsernamePasswordAuthenticationToken(username, pwd,
+						getGrantedAuthorities(customer.get().getAuthorities()));
 			} else {
 				throw new BadCredentialsException("Invalid password!");
 			}
-
 		} else {
 			throw new BadCredentialsException("No user registered with this details!");
 		}
+	}
 
+	private List<GrantedAuthority> getGrantedAuthorities(Set<Authority> authorities) {
+		List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+		for (Authority authority : authorities) {
+			grantedAuthorities.add(new SimpleGrantedAuthority(authority.getName()));
+		}
+		return grantedAuthorities;
 	}
 
 	@Override
