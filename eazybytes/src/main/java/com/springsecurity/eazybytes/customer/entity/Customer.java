@@ -1,11 +1,15 @@
 package com.springsecurity.eazybytes.customer.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.springsecurity.eazybytes.auth.Authority;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -32,5 +36,9 @@ public class Customer {
 	private String role;
 
 	private String createDt;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+	private Set<Authority> authorities;
 
 }

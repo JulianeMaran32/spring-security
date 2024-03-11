@@ -97,6 +97,16 @@ CREATE TABLE eazybank.contact_messages
     PRIMARY KEY (`contact_id`)
 );
 
+CREATE TABLE eazybank.authorities
+(
+    `id`          int         NOT NULL AUTO_INCREMENT,
+    `customer_id` int         NOT NULL,
+    `name`        varchar(50) NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `customer_id` (`customer_id`),
+    CONSTRAINT `authorities_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`)
+);
+
 -- INSERE DADOS NAS TABELAS
 INSERT INTO eazybank.customers (name, email, mobile_number, pwd, role, create_dt)
 VALUES ('Happy', 'happy@example.com', '9876548337', '$2y$12$oRRbkNfwuR8ug4MlzH5FOeui.//1mkd.RsOAJMbykTSupVy.x/vb2',
@@ -157,3 +167,15 @@ VALUES ('Home Loan Interest rates reduced',
         'EazyBank launched an insurance policy which will cover COVID-19 expenses. Please reach out to the branch for more details',
         CURDATE() - INTERVAL 30 DAY, CURDATE() + INTERVAL 30 DAY, CURDATE(), null);
 
+INSERT INTO eazybank.authorities (`customer_id`, `name`)
+VALUES (1, 'VIEWACCOUNT'),
+       (1, 'VIEWCARDS'),
+       (1, 'VIEWLOANS'),
+       (1, 'VIEWBALANCE');
+
+DELETE
+FROM eazybank.authorities;
+
+INSERT INTO eazybank.authorities (`customer_id`, `name`)
+VALUES (1, 'ROLE_USER'),
+       (1, 'ROLE_ADMIN');
