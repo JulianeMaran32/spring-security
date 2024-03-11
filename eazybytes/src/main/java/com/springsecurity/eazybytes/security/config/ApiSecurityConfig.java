@@ -22,13 +22,54 @@ import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Collections;
 
+/**
+ * Classe de configuração de segurança para a API.
+ * <p>
+ * Define as configurações personalizadas de segurança para proteger o sistema contra acesso não autorizado, uso
+ * indevido e outras ameaças.
+ * <p>
+ * `@EnableWebSecurity` habilita a segurança do Spring Security.
+ * <p>
+ * `@EnableWebSecurity(debug = true)` (opcional) habilita logs de debug da segurança. Não é recomendado em produção.
+ *
+ * @author juliane.maran
+ * @since 11-03-2024
+ */
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 public class ApiSecurityConfig {
 
 	/**
-	 * Configurações personalizadas de segurança para proteger o sistema contra acesso não autorizado, uso indevido e
-	 * outras ameaças.
+	 * Define a cadeia de segurança padrão da aplicação.
+	 * <p>
+	 * O método configura diversas opções de segurança, incluindo:
+	 * <p>
+	 * * Sessão: define a política de criação de sessão como STATELESS (sem estado).
+	 * <p>
+	 * * CORS: define o CORS (Cross-Origin Resource Sharing) permitindo requisições de qualquer origem (*).
+	 * <p>
+	 * * CSRF: configura a proteção CSRF (Cross-Site Request Forgery) com as seguintes características: <br> * Token
+	 * CSRF enviado no atributo "_csrf". <br> * Ignora as URLs "/contact", "/register". <br> * Armazena o token CSRF em
+	 * um cookie acessível por Javascript.
+	 * <p>
+	 * * Filtros de segurança: adiciona diversos filtros de segurança na cadeia em uma ordem específica: <br> *
+	 * CsrfCookieFilter: Adiciona o token CSRF ao cookie. <br> * RequestValidationBeforeFilter: Realiza validação de
+	 * requisições antes da autenticação básica. <br> * AuthorizatiesLogginAtFilter: Registra log de autorização no
+	 * início da requisição. <br> * AuthorizatiesLogginAfterFilter: Registra log de autorização no final da requisição.
+	 * <br> * JWTTokenGeneratorFilter: Gera token JWT caso necessário. <br> * JWTTokenValidatorFilter: Valida o token
+	 * JWT recebido na requisição.
+	 * <p>
+	 * * Autorização: define as autorizações de acesso para cada endpoint da API.
+	 * <p>
+	 * * Autenticação: configura a autenticação básica e por formulário com configurações padrão.
+	 *
+	 * @param http
+	 * 		Objeto HttpSecurity utilizado para configurar a segurança.
+	 *
+	 * @return SecurityFilterChain A cadeia de segurança configurada.
+	 *
+	 * @throws Exception
+	 * 		Lançada caso ocorra algum erro durante a configuração.
 	 */
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -69,6 +110,11 @@ public class ApiSecurityConfig {
 
 	}
 
+	/**
+	 * Cria e retorna um codificador de senha utilizando o algoritmo BCrypt.
+	 *
+	 * @return PasswordEncoder objeto utilizado para codificar senhas de usuários.
+	 */
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();

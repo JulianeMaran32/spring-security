@@ -20,8 +20,27 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Esta classe é um filtro de segurança baseado na API de Servlet do Java que gera tokens JWT (JSON Web Token) para
+ * usuários autenticados no Spring Security.
+ *
+ * @author juliane.maran
+ * @since 11-03-2024
+ */
 public class JWTTokenGeneratorFilter extends OncePerRequestFilter {
 
+	/**
+	 * Este método é invocado pelo Spring Security durante o processamento de uma requisição.
+	 * <p>
+	 * Obtém a informação de autenticação do contexto de segurança usando
+	 * `SecurityContextHolder.getContext().getAuthentication()`.
+	 * <p>
+	 * Se a autenticação for bem-sucedida (ou seja, authentication não é nulo): <br> * Gera uma chave secreta
+	 * (`SecretKey`) a partir da constante `SecurityConstants.JWT_KEY`. <br> * Constrói um token JWT usando
+	 * `Jwts.builder()`
+	 * <p>
+	 * Permite que a requisição continue na cadeia de filtros chamando `filterChain.doFilter(request, response)`.
+	 */
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
@@ -49,16 +68,22 @@ public class JWTTokenGeneratorFilter extends OncePerRequestFilter {
 	}
 
 	/**
-	 * getServletPath(): Este método retorna a parte do URI da requisição que indica o contexto da requisição. O
-	 * contexto sempre aparece na primeira posição do URI. O caminho começa com um caractere "/" (barra) mas não termina
-	 * com outro caractere "/". Para servlets no contexto padrão (raiz), este método retorna uma string vazia (" "). O
-	 * contêiner web não decodifica esta string.
+	 * Este método determina se o filtro deve ser aplicado à requisição.
+	 * <p>
+	 * Retorna `true` se o caminho da requisição não for "/user", ou seja, o filtro será aplicado apenas à requisição
+	 * "/user".
 	 */
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) {
 		return !request.getServletPath().equals("/user");
 	}
 
+	/**
+	 * Este método privado converte uma coleção de autoridades (`GrantedAuthority`) em uma string separada por
+	 * vírgulas.
+	 * <p>
+	 * Ele é usado para incluir as autoridades do usuário no token JWT.
+	 */
 	private String populateAuthorities(Collection<? extends GrantedAuthority> collection) {
 		Set<String> authoritiesSet = new HashSet<>();
 		for (GrantedAuthority authority : collection) {

@@ -13,11 +13,34 @@ import java.util.Base64;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
+/**
+ * Esta classe é um filtro de segurança baseado na API de Servlet do Java que realiza validação de requisições antes da
+ * execução da autenticação básica no Spring Security.
+ *
+ * @author juliane.maran
+ * @since 11-03-2024
+ */
 public class RequestValidationBeforeFilter implements Filter {
 
+	// Constante com o valor "Basic", representando o esquema de autenticação básica.
 	public static final String AUTHENTICATION_SCHEME_BASIC = "Basic";
+
+	// Charset utilizado para decodificar credenciais de autenticação básica (padrão: UTF-8).
 	private Charset credentialsCharset = StandardCharsets.UTF_8;
 
+	/**
+	 * Este método é invocado pelo Spring Security durante o processamento de uma requisição.
+	 * <p>
+	 * Obtém o cabeçalho de autorização (AUTHORIZATION) da requisição.
+	 *
+	 * @param request
+	 * 		The request to process
+	 * @param response
+	 * 		The response associated with the request
+	 * @param chain
+	 * 		Provides access to the next filter in the chain for this filter to pass the request and response to for further
+	 * 		processing
+	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
