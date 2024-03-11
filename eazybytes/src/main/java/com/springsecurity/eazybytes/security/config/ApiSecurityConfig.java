@@ -1,9 +1,9 @@
 package com.springsecurity.eazybytes.security.config;
 
-import com.springsecurity.eazybytes.security.filter.AuthorizatiesLogginAfterFilter;
-import com.springsecurity.eazybytes.security.filter.AuthorizatiesLogginAtFilter;
-import com.springsecurity.eazybytes.security.filter.CsrfCookieFilter;
-import com.springsecurity.eazybytes.security.filter.RequestValidationBeforeFilter;
+import com.springsecurity.eazybytes.security.filter.loggin.AuthorizatiesLogginAfterFilter;
+import com.springsecurity.eazybytes.security.filter.loggin.AuthorizatiesLogginAtFilter;
+import com.springsecurity.eazybytes.security.filter.csrf.CsrfCookieFilter;
+import com.springsecurity.eazybytes.security.filter.validation.RequestValidationBeforeFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -36,7 +36,8 @@ public class ApiSecurityConfig {
 
 		http.securityContext((context) -> context
 						.requireExplicitSave(false))
-				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+				.sessionManagement(session -> session
+						.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
 					CorsConfiguration config = new CorsConfiguration();
 					config.setAllowedOrigins(Collections.singletonList("*"));
@@ -52,6 +53,8 @@ public class ApiSecurityConfig {
 				.addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
 				.addFilterAt(new AuthorizatiesLogginAtFilter(), BasicAuthenticationFilter.class)
 				.addFilterAfter(new AuthorizatiesLogginAfterFilter(), BasicAuthenticationFilter.class)
+//				.addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
+//				.addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
 				.authorizeHttpRequests((requests) -> requests
 						.requestMatchers("/myAccount").hasRole("USER")
 						.requestMatchers("/myBalance").hasAnyRole("USER", "ADMIN")

@@ -1,4 +1,4 @@
-package com.springsecurity.eazybytes.security.filter;
+package com.springsecurity.eazybytes.security.filter.loggin;
 
 import jakarta.servlet.*;
 import lombok.extern.slf4j.Slf4j;

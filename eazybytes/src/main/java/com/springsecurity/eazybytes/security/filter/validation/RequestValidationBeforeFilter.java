@@ -1,4 +1,4 @@
-package com.springsecurity.eazybytes.security.filter;
+package com.springsecurity.eazybytes.security.filter.validation;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;

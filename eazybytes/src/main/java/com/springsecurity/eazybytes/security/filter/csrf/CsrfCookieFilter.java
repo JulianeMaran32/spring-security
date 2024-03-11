@@ -1,4 +1,4 @@
-package com.springsecurity.eazybytes.security.filter;
+package com.springsecurity.eazybytes.security.filter.csrf;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
