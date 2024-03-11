@@ -4,6 +4,7 @@ import com.springsecurity.eazybytes.security.filter.csrf.CsrfCookieFilter;
 import com.springsecurity.eazybytes.security.filter.loggin.AuthorizatiesLogginAfterFilter;
 import com.springsecurity.eazybytes.security.filter.loggin.AuthorizatiesLogginAtFilter;
 import com.springsecurity.eazybytes.security.filter.token.JWTTokenGeneratorFilter;
+import com.springsecurity.eazybytes.security.filter.token.JWTTokenValidatorFilter;
 import com.springsecurity.eazybytes.security.filter.validation.RequestValidationBeforeFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,9 +37,6 @@ public class ApiSecurityConfig {
 		requestHandler.setCsrfRequestAttributeName("_csrf");
 
 		http
-				// securityContext: permite configurar como o contexto de segurança é gerenciado entre requisições HTTP
-//				.securityContext((context) -> context.requireExplicitSave(false))
-//				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
 					CorsConfiguration config = new CorsConfiguration();
@@ -56,7 +54,7 @@ public class ApiSecurityConfig {
 				.addFilterAt(new AuthorizatiesLogginAtFilter(), BasicAuthenticationFilter.class)
 				.addFilterAfter(new AuthorizatiesLogginAfterFilter(), BasicAuthenticationFilter.class)
 				.addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
-//				.addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
+				.addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
 				.authorizeHttpRequests((requests) -> requests
 						.requestMatchers("/myAccount").hasRole("USER")
 						.requestMatchers("/myBalance").hasAnyRole("USER", "ADMIN")
