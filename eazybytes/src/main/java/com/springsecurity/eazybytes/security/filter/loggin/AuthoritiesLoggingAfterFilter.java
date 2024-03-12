@@ -1,11 +1,11 @@
 package com.springsecurity.eazybytes.security.filter.loggin;
 
 import jakarta.servlet.*;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * Esta classe é um filtro de segurança baseado na API de Servlet do Java que registra informações sobre usuários
@@ -14,8 +14,10 @@ import java.io.IOException;
  * @author juliane.maran
  * @since 11-03-2024
  */
-@Slf4j
-public class AuthorizatiesLogginAfterFilter implements Filter {
+public class AuthoritiesLoggingAfterFilter implements Filter {
+
+	private final Logger LOG =
+			Logger.getLogger(AuthoritiesLoggingAfterFilter.class.getName());
 
 	/**
 	 * Este método é invocado pelo Spring Security durante o processamento de uma requisição.
@@ -24,7 +26,8 @@ public class AuthorizatiesLogginAfterFilter implements Filter {
 	 * `SecurityContextHolder.getContext().getAuthentication()`.
 	 * <p>
 	 * Se a autenticação for bem-sucedida (ou seja, authentication não é nulo), o filtro registra uma mensagem de
-	 * informação (`log.info`) contendo: <br> * O nome do usuário autenticado. <br> * As autoridades (roles) do usuário.
+	 * informação (`log.info`) contendo: <br> * O nome do usuário autenticado. <br> * As autoridades (roles) do
+	 * usuário.
 	 * <br>
 	 * <p>
 	 * Permite que a requisição continue na cadeia de filtros chamando `chain.doFilter(request, response)`.
@@ -42,14 +45,11 @@ public class AuthorizatiesLogginAfterFilter implements Filter {
 			throws IOException, ServletException {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
 		if (null != authentication) {
-			log.info("User {} is successfully authenticated and has the authorities {}",
-					authentication.getName(), authentication.getAuthorities().toString());
+			LOG.info("User " + authentication.getName() + " is successfully authenticated and "
+					+ "has the authorities " + authentication.getAuthorities().toString());
 		}
-
 		chain.doFilter(request, response);
-
 	}
 
 }

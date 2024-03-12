@@ -104,7 +104,7 @@ CREATE TABLE eazybank.authorities
     `name`        varchar(50) NOT NULL,
     PRIMARY KEY (`id`),
     KEY `customer_id` (`customer_id`),
-    CONSTRAINT `authorities_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`)
+    CONSTRAINT `authorities_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`)
 );
 
 -- INSERE DADOS NAS TABELAS

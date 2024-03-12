@@ -1,8 +1,8 @@
 package com.springsecurity.eazybytes.security.config;
 
 import com.springsecurity.eazybytes.security.filter.csrf.CsrfCookieFilter;
-import com.springsecurity.eazybytes.security.filter.loggin.AuthorizatiesLogginAfterFilter;
-import com.springsecurity.eazybytes.security.filter.loggin.AuthorizatiesLogginAtFilter;
+import com.springsecurity.eazybytes.security.filter.loggin.AuthoritiesLoggingAfterFilter;
+import com.springsecurity.eazybytes.security.filter.loggin.AuthoritiesLoggingAtFilter;
 import com.springsecurity.eazybytes.security.filter.token.JWTTokenGeneratorFilter;
 import com.springsecurity.eazybytes.security.filter.token.JWTTokenValidatorFilter;
 import com.springsecurity.eazybytes.security.filter.validation.RequestValidationBeforeFilter;
@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +20,7 @@ import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Classe de configuração de segurança para a API.
@@ -36,7 +36,6 @@ import java.util.Collections;
  * @since 11-03-2024
  */
 @Configuration
-@EnableWebSecurity
 public class ApiSecurityConfig {
 
 	/**
@@ -81,10 +80,11 @@ public class ApiSecurityConfig {
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
 					CorsConfiguration config = new CorsConfiguration();
-					config.setAllowedOrigins(Collections.singletonList("*"));
+					config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
 					config.setAllowedMethods(Collections.singletonList("*"));
 					config.setAllowCredentials(true);
 					config.setAllowedHeaders(Collections.singletonList("*"));
+					config.setExposedHeaders(List.of("Authorization"));
 					config.setMaxAge(3600L);
 					return config;
 				})).csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler)
@@ -92,8 +92,8 @@ public class ApiSecurityConfig {
 						.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
 				.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
 				.addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
-				.addFilterAt(new AuthorizatiesLogginAtFilter(), BasicAuthenticationFilter.class)
-				.addFilterAfter(new AuthorizatiesLogginAfterFilter(), BasicAuthenticationFilter.class)
+				.addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class)
+				.addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
 				.addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
 				.addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
 				.authorizeHttpRequests((requests) -> requests

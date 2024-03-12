@@ -26,3 +26,10 @@
 - [Form Login]()
 - [UserDetailsService]()
 - [Username/Password Authentication]()
+
+---
+
+Para testar a aplicação:
+
+Usuário: julianemaran@gmail.com
+Senha: 12345678

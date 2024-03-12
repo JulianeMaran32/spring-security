@@ -45,12 +45,11 @@ public class RequestValidationBeforeFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
-		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-		String header = httpServletRequest.getHeader(AUTHORIZATION);
+		HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse res = (HttpServletResponse) response;
+		String header = req.getHeader(AUTHORIZATION);
 
 		if (header != null) {
-
 			header = header.trim();
 
 			if (StringUtils.startsWithIgnoreCase(header, AUTHENTICATION_SCHEME_BASIC)) {
@@ -63,14 +62,13 @@ public class RequestValidationBeforeFilter implements Filter {
 					decoded = Base64.getDecoder().decode(base64Token);
 					String token = new String(decoded, credentialsCharset);
 					int delim = token.indexOf(":");
-
 					if (delim == -1) {
 						throw new BadCredentialsException("Invalid basic authentication token");
 					}
 
 					String email = token.substring(0, delim);
 					if (email.toLowerCase().contains("test")) {
-						httpServletResponse.setStatus(httpServletResponse.SC_BAD_REQUEST);
+						res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 						return;
 					}
 
