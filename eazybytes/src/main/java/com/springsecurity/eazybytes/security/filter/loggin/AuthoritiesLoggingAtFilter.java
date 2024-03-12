@@ -1,19 +1,15 @@
 package com.springsecurity.eazybytes.security.filter.loggin;
 
 import jakarta.servlet.*;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
-/**
- * Esta classe (`AuthorizatiesLogginAtFilter`) é um filtro de segurança baseado na API de Servlet do Java que registra
- * uma mensagem de informação quando a validação de autenticação está em andamento no Spring Security.
- *
- * @author juliane.maran
- * @since 11-03-2024
- */
-@Slf4j
-public class AuthorizatiesLogginAtFilter implements Filter {
+
+public class AuthoritiesLoggingAtFilter implements Filter {
+
+	private final Logger LOG =
+			Logger.getLogger(AuthoritiesLoggingAtFilter.class.getName());
 
 	/**
 	 * Este método é invocado pelo Spring Security durante o processamento de uma requisição.
@@ -33,7 +29,7 @@ public class AuthorizatiesLogginAtFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		log.info("Authentication Validation is in progress!");
+		LOG.info("Authentication Validation is in progress");
 		chain.doFilter(request, response);
 	}
 

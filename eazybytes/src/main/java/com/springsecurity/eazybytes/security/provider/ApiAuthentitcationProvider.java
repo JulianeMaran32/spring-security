@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -61,22 +60,22 @@ public class ApiAuthentitcationProvider implements AuthenticationProvider {
 	 * 		the authentication request object.
 	 */
 	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+	public Authentication authenticate(Authentication authentication)
+			throws AuthenticationException {
 
 		String username = authentication.getName();
 		String pwd = authentication.getCredentials().toString();
-		Optional<Customer> customer = customerRepository.findByEmail(username);
+		List<Customer> customer = customerRepository.findByEmail(username);
 
-		if (customer.isPresent()) {
+		if (customer.size() > 0) {
 
-			if (passwordEncoder.matches(pwd, customer.get().getPwd())) {
-				return new UsernamePasswordAuthenticationToken(username, pwd,
-						getGrantedAuthorities(customer.get().getAuthorities()));
+			if (passwordEncoder.matches(pwd, customer.get(0).getPwd())) {
+				return new UsernamePasswordAuthenticationToken(username, pwd, getGrantedAuthorities(customer.get(0).getAuthorities()));
 			} else {
 				throw new BadCredentialsException("Invalid password!");
 			}
 
-		} else {
+		}else {
 			throw new BadCredentialsException("No user registered with this details!");
 		}
 
