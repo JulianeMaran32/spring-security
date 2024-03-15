@@ -18,7 +18,7 @@ export class XhrInterceptor implements HttpInterceptor {
     if(sessionStorage.getItem('userdetails')){
       this.user = JSON.parse(sessionStorage.getItem('userdetails')!);
     }
-
+    
     if(this.user && this.user.password && this.user.email){
       httpHeaders = httpHeaders.append('Authorization', 'Basic ' + window.btoa(this.user.email + ':' + this.user.password));
     }else {
@@ -46,9 +46,9 @@ export class XhrInterceptor implements HttpInterceptor {
           }
           this.router.navigate(['dashboard']);
         }
-      })
-    );
-    
+      }
+    ));
+
   }
 
 }

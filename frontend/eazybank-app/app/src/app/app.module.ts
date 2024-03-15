@@ -17,7 +17,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { XhrInterceptor } from './interceptors/app.request.interceptor';
-import { authGuard } from './routeguards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -35,7 +34,7 @@ import { authGuard } from './routeguards/auth.guard';
     NoticesComponent
   ],
   imports: [
-    BrowserModule,
+  BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,

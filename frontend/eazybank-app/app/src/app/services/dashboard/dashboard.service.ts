@@ -9,6 +9,8 @@ import { environment } from 'src/environments/environment';
 })
 export class DashboardService {
 
+  // rooturl = 'http://localhost:8585';
+
   constructor(private http:HttpClient) { }
 
   getAccountDetails(id: number){
@@ -19,21 +21,21 @@ export class DashboardService {
   }
 
   getAccountTransactions(id: number){
-    return this.http.get(environment.rooturl + AppConstants.BALANCE_API_URL+ "?id=" + id, {
+    return this.http.get(environment.rooturl + AppConstants.BALANCE_API_URL + "?id=" + id, {
       observe: 'response',
       withCredentials: true
     });
   }
 
   getLoansDetails(id: number){
-    return this.http.get(environment.rooturl + AppConstants.LOANS_API_URL+ "?id=" + id, {
+    return this.http.get(environment.rooturl + AppConstants.LOANS_API_URL + "?id=" + id, {
       observe: 'response',
       withCredentials: true
     });
   }
 
   getCardsDetails(id: number){
-    return this.http.get(environment.rooturl + AppConstants.CARDS_API_URL+ "?id=" + id, {
+    return this.http.get(environment.rooturl + AppConstants.CARDS_API_URL + "?id=" + id, {
       observe: 'response',
       withCredentials: true
     });
@@ -46,7 +48,9 @@ export class DashboardService {
   }
 
   saveMessage(contact : Contact){
-    return this.http.post(environment.rooturl + AppConstants.CONTACT_API_URL, contact, {
+    var contacts = [];
+    contacts.push(contact);
+    return this.http.post(environment.rooturl + AppConstants.CONTACT_API_URL, contacts, {
       observe: 'response'
     });
   }
