@@ -22,7 +22,6 @@ spring:
 #      name: eazybytes
 #      password: 123456
 
-
 # Logs
 logging:
   level:
