@@ -1,0 +1,12 @@
+### register customer
+POST /api/customers/register HTTP/1.1
+Host: localhost:8585
+Content-Type: application/json
+Cookie: JSESSIONID=A2CF76F709F6DDE822F1F3EDD1384C8A
+Content-Length: 83
+
+{
+  "email": "juliane2@email.com",
+  "pwd": "123456",
+  "role": "admin"
+}
