@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: eazybytes
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: 3d3319e60f6cab25e468
+            client-secret: 2198da791cc3b26820d766feba49a326690c1ecd
+
+# Logs
+logging:
+  level:
+    web: DEBUG
+  file:
+    name: application.log
