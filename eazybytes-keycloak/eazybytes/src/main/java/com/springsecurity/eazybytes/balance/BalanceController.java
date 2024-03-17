@@ -1,5 +1,7 @@
 package com.springsecurity.eazybytes.balance;
 
+import com.springsecurity.eazybytes.customer.entity.Customer;
+import com.springsecurity.eazybytes.customer.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,16 +17,19 @@ import java.util.Optional;
 public class BalanceController {
 
 	private final AccountTransactionsRepository accountTransactionsRepository;
+	private final CustomerRepository customerRepository;
 
 	@GetMapping("/myBalance")
-	public List<AccountTransactions> getBalanceDetails(@RequestParam int id) {
-		List<AccountTransactions> accountTransactions = accountTransactionsRepository.
-				findByCustomerIdOrderByTransactionDtDesc(id);
-		if (accountTransactions != null ) {
-			return accountTransactions;
-		}else {
-			return null;
+	public List<AccountTransactions> getBalanceDetails(@RequestParam String email) {
+		List<Customer> customers = customerRepository.findByEmail(email);
+		if (customers != null && !customers.isEmpty()) {
+			List<AccountTransactions> accountTransactions = accountTransactionsRepository.
+					findByCustomerIdOrderByTransactionDtDesc(customers.get(0).getId());
+			if (accountTransactions != null ) {
+				return accountTransactions;
+			}
 		}
+		return null;
 	}
 
 }

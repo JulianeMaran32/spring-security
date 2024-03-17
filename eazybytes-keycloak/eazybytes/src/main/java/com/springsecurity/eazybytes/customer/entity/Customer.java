@@ -2,7 +2,6 @@ package com.springsecurity.eazybytes.customer.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.springsecurity.eazybytes.auth.Authority;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
