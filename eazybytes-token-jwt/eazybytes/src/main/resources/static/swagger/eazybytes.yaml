@@ -1,9 +1,0 @@
-openapi: 3.0.3
-info:
-  title: EazyBytes
-  description: EazyBytes
-  version: 1.0.0
-servers:
-  - url: 'http://localhost:8585/api'
-paths:
-  

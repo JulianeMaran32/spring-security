@@ -1,5 +1,6 @@
 package com.springsecurity.eazybytes.notices;
 
+import com.springsecurity.eazybytes.customer.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class NoticesController {
 
 	private final NoticeRepository noticeRepository;
+	private final CustomerRepository customerRepository;
 
 	@GetMapping("/notices")
 	public ResponseEntity<List<Notice>> getNotices() {

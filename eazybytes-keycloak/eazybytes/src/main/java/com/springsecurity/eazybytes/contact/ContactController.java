@@ -20,7 +20,6 @@ public class ContactController {
 	private final ContactRepository contactRepository;
 
 	@PostMapping("/contact")
-//	@PreFilter(value = "filterObject.contactName != 'Test'")
 	@PostFilter(value = "filterObject.contactName != 'Test'")
 	public List<Contact> saveContactInquiryDetails(@RequestBody List<Contact> contacts) {
 
@@ -29,18 +28,11 @@ public class ContactController {
 		contact.setCreateDt(LocalDateTime.now());
 		contact = contactRepository.save(contact);
 
-		List<Contact> returnContacts = new ArrayList<>();
+		List<Contact> returnContacts = new ArrayList();
 		returnContacts.add(contact);
 
 		return returnContacts;
 	}
-
-//	@PostMapping("/contact")
-//	public Contact saveContactInquiryDetails(@RequestBody Contact contact) {
-//		contact.setContactId(getServiceReqNumber());
-//		contact.setCreateDt(LocalDateTime.now());
-//		return contactRepository.save(contact);
-//	}
 
 	public String getServiceReqNumber() {
 		var random = new Random();

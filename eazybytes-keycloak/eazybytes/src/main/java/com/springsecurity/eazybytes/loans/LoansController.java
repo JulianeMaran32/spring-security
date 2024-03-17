@@ -1,5 +1,7 @@
 package com.springsecurity.eazybytes.loans;
 
+import com.springsecurity.eazybytes.customer.entity.Customer;
+import com.springsecurity.eazybytes.customer.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,18 +17,19 @@ import java.util.Optional;
 @AllArgsConstructor
 public class LoansController {
 
+	private final CustomerRepository customerRepository;
 	private final LoanRepository loanRepository;
 
 	@GetMapping("/myLoans")
-	@PreAuthorize("hasRole('USER')")
-	public List<Loans> getLoanDetails(@RequestParam int id) {
-		List<Loans> loans = loanRepository
-				.findByCustomerIdOrderByStartDtDesc(id);
-		if (loans != null) {
-			return loans;
-		} else {
-			return null;
+	public List<Loans> getLoanDetails(@RequestParam String email) {
+		List<Customer> customers = customerRepository.findByEmail(email);
+		if (customers != null && !customers.isEmpty()) {
+			List<Loans> loans = loanRepository.findByCustomerIdOrderByStartDtDesc(customers.get(0).getId());
+			if (loans != null ) {
+				return loans;
+			}
 		}
+		return null;
 	}
 
 }

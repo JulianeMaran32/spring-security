@@ -1,5 +1,0 @@
-### get card details
-GET /api/myCards HTTP/1.1
-Host: localhost:8585
-Authorization: Basic am9obmRvZUBleGFtcGxlLmNvbTo1NDMyMQ==
-Cookie: JSESSIONID=48BCD8CFCE7391C2E90ED7EEA81885FE
